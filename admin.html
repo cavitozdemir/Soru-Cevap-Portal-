@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin Panel</title>
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/page.js"></script>
+    <script src="js/admin.js"></script>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-default navbar-fixed-top" id="main-menu">
+            <div class="container">
+                <div class="navbar-header">
+                    <button id="collapse-menu-btn" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-contents"
+                        aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html">Soru Cevap Portalı</a>
+                </div>
+
+                <div class="navbar-collapse collapse menu-contents" id="main-menu-contents">
+                    <ul class="nav navbar-nav">
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="active">
+                            
+                            <a href="#yonetici-paneli">Yönetici Paneli</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+    <div class="scroll-target page-block" id="students-info">
+        <div class="container-fluid">
+            <h1 class="text-center">Kayıt Kontrol Noktası</h1>
+
+            <div class="dropdown col-xs-2 col-xs-offset-8 col-lg-1 col-lg-offset-10" id="sort">
+                <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown" id="sort-dropdown">Kayıtlar
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu pull-right">
+                    <li>
+                        <a href="#">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="sort-by" checked="true" value="number">Kayıt No</label>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="sort-by" value="first_name">Adı</label>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="sort-by" value="second_name">Soyadı</label>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="sort-by" value="exam1">Yaş</label>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="sort-by" value="exam2">Siteye Girişler</label>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="sort-by" value="score">Ortalama Derecesi</label>
+                            </div>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+
+            <div style="overflow-x: scroll;" class="col-xs-12 hidden-scroll-x">
+                <table class="table table-hover" id="students-list">
+                    <thead>
+                        <th>
+                            <input type="checkbox">
+                        </th>
+                        <th>Kayıt No</th>
+                        <th>Adı</th>
+                        <th>Soyadı</th>
+                        <th>Yaş</th>
+                        <th>Siteye Girişler</th>
+                        <th>Ortalama Derecesi</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="container-fluid">
+                <div class="col-xs-12">
+                    <button class="btn btn-success" id="add-student" aria-controls="#students-list">Ekle</button>
+                    <button class="btn btn-info" id="edit-student" aria-controls="#students-list" disabled>Güncelle</button>
+                    <button class="btn btn-danger" id="remove-student" aria-controls="#students-list" disabled>Sil</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="list-group" style="display: none; position: fixed;" id="edit-context-menu">
+            <a href="#" class="list-group-item" id="add-student-context" aria-controls="#students-list">Ekle</a>
+            <a href="#" class="list-group-item" id="remove-student-context" aria-controls="#students-list">Sil</a>
+        <a href="#" class="list-group-item" id="edit-student-context" aria-controls="#students-list">Güncelle</a>
+       
+    </div>
+
+    <div class="container edit-background" id="edit-window">
+        <div class="edit-block hidden-scroll-y">
+            <div class="container-fluid">
+                <h3 class="text-center" style="padding-bottom: 7px; color: white;">Kullanıcı Güncelleme</h3>
+                <div class="col-xs-12 col-sm-2 col-sm-offset-1 col-md-2 col-md-offset-1">
+                    <input class="form-control" id="edit-number" placeholder="Kayıt No" disabled>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <input class="form-control" id="edit-name" placeholder="Adı">
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <input class="form-control" id="edit-surname" placeholder="Soyadı">
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <input class="form-control" id="edit-exam1" placeholder="Yaş">
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <input class="form-control" id="edit-exam2" placeholder="Siteye Girişlerf">
+                </div>
+
+                <div style="width: 100%" id="edit-lesson-chooser">
+                    <button type="button" class="btn btn-primary col-xs-12 col-md-3 math-color" id="edit-math">LÜTFEN</button>
+                    <button type="button" class="btn btn-primary col-xs-12 col-md-3 physics-color" id="edit-physics">BİLGİLERİNİZİ</button>
+                    <button type="button" class="btn btn-primary col-xs-12 col-md-3 lit-color" id="edit-lit">KONTROL</button>
+                    <button type="button" class="btn btn-primary col-xs-12 col-md-3 chemistry-color" id="edit-chemistry">EDİNİZ...</button>
+                </div>
+
+                <div class="col-xs-5 col-xs-offset-1">
+                    <button class="btn btn-success" style="width: 100%">Kaydet</button>
+                </div>
+                <div class="col-xs-5">
+                    <button class="btn btn-danger" style="width: 100%">Çık</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container edit-background" id="add-window">
+        <div class="edit-block hidden-scroll-y">
+            <div class="container-fluid">
+                <h3 class="text-center" style="padding-bottom: 7px; color: white;">Kullanıcı Ekleme</h3>
+                <div class="col-xs-12 col-sm-2 col-sm-offset-1 col-md-2 col-md-offset-1">
+                    <input class="form-control" id="add-number" placeholder="Kayıt No">
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <input class="form-control" id="add-name" placeholder="Ad">
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <input class="form-control" id="add-surname" placeholder="Soyad">
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <input class="form-control" id="add-exam1" placeholder="Yaş">
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <input class="form-control" id="add-exam2" placeholder="Siteye Girişler">
+                </div>
+
+                <div style="width: 100%" id="add-lesson-chooser">
+                    <button type="button" class="btn btn-primary col-xs-12 col-md-3 math-color" id="add-math">LÜTFEN</button>
+                    <button type="button" class="btn btn-primary col-xs-12 col-md-3 physics-color" id="add-physics">BİLGİLERİNİZİ</button>
+                    <button type="button" class="btn btn-primary col-xs-12 col-md-3 lit-color" id="add-lit">KONTROL</button>
+                    <button type="button" class="btn btn-primary col-xs-12 col-md-3 chemistry-color" id="add-chemistry">EDİNİZ...</button>
+                </div>
+
+                <div class="col-xs-5 col-xs-offset-1">
+                    <button class="btn btn-success" style="width: 100%" disabled>Ekle</button>
+                </div>
+                <div class="col-xs-5">
+                    <button class="btn btn-danger" style="width: 100%">Çık</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
